@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/games.css">
+    <title>Game</title>
+</head>
+<body class="game-screen">
+    <iframe title="Game" allowfullscreen allow="fullscreen; autoplay; gamepad"></iframe>
+    <p class="html-main-game-error" role="alert" hidden>Unable to open this game. Return to Gn-Math and try another game.</p>
+    <script>
+        const gameParameters = new URLSearchParams(window.location.search);
+        const gameFile = gameParameters.get('game') || '';
+        const gameTitle = gameParameters.get('title') || 'Game';
+        const gameFrame = document.querySelector('.game-screen iframe');
+        const gameError = document.querySelector('.html-main-game-error');
+
+        gameFrame.title = gameTitle;
+        document.title = gameTitle;
+
+        if (/^[a-z0-9 _().-]+\.html$/i.test(gameFile)) {
+            gameFrame.src = `../html-main/html-main/${encodeURIComponent(gameFile)}`;
+        } else {
+            gameFrame.hidden = true;
+            gameError.hidden = false;
+        }
+    </script>
+    <script src="../js/overlay-tab.js"></script>
+</body>
+</html>
